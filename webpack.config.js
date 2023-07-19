@@ -10,7 +10,7 @@ module.exports = {
     devtool: "inline-source-map",
     plugins: [
         new HtmlWebpackPlugin({
-            title: "Burger Time!",
+            title: "ToDo List",
         }),
     ],
     output: {

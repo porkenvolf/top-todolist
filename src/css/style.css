@@ -1,0 +1,73 @@
+@import url(./equalize.css);
+@import url(./scrollbar.css);
+@import url(./variables.css);
+
+body {
+    min-height: 100vh;
+    background: red;
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+    grid-template-rows: 5rem 1fr;
+    color: var(--text);
+}
+button {
+    border-radius: 50px;
+    padding: 1rem;
+}
+#nav {
+    background: var(--dark-bg);
+    border-bottom: 2px solid var(--border);
+    grid-column: 1/-1;
+    padding: 1rem;
+}
+#leftPanel {
+    background: var(--mid-bg);
+    border-right: 2px solid var(--border);
+    padding: 1rem;
+}
+#mainContent {
+    display: flex;
+    flex-direction: column;
+}
+#mainContent .buttons {
+    background: var(--mid-bg);
+    padding: 1rem;
+}
+#mainContent .content {
+    flex: 1;
+    padding: 1rem;
+    background: var(--mid-bg);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+}
+#mainContent .content .project {
+    background: var(--light-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    max-height: 50vh;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 30rem;
+}
+#mainContent .content .name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+#mainContent .content .description {
+}
+#mainContent ul {
+    padding-left: 2rem;
+    flex: 1;
+}
+#mainContent .content progress {
+    width: 100%;
+    height: 1.5rem;
+}
+#mainContent .content button {
+    width: 100%;
+}
