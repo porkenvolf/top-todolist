@@ -1,13 +1,14 @@
 import Task from "./Task";
 
-export default class Project {
+export default class List {
     #name;
-    #tasks = [];
-    constructor(_name) {
+    #tasks = {};
+    constructor(_name, _objTasks) {
         this.#name = _name;
+        if (_objTasks) this.#tasks = _objTasks;
     }
 
-    newTask(_name, _description) {
+    /* newTask(_name) {
         let name;
         if (_name) {
             name = _name;
@@ -16,10 +17,9 @@ export default class Project {
             console.error(error);
             return error;
         }
-        const description = _description ? _description : "";
-        const newTask = new Task(name, description);
+        const newTask = new Task(name);
         this.#tasks.push(newTask);
-    }
+    } */
 
     get tasks() {
         return this.#tasks;
@@ -29,5 +29,8 @@ export default class Project {
     }
     set name(arg) {
         this.#name = arg;
+    }
+    get parse() {
+        return { name: this.#name, tasks: this.#tasks };
     }
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="../src/style.css" />
+    </head>
+    <body>
+        <div id="modal-addBook" class="modal">
+            <div class="modal-body">
+                <div class="top-bar">
+                    <h1>New Project</h1>
+                    <button id="btnModalClose">
+                        <img src="../src/img/close.svg" alt="" />
+                    </button>
+                </div>
+                <form action="" id="formNewProject">
+                    <ul>
+                        <li>
+                            <label for="author" hidden aria-required="true">
+                                Author:
+                            </label>
+                            <input
+                                required
+                                type="text"
+                                id="author"
+                                placeholder="Author" />
+                        </li>
+                        <li>
+                            <label for="title" hidden aria-required="true">
+                                Title:
+                            </label>
+                            <input
+                                required
+                                type="text"
+                                id="title"
+                                placeholder="Title" />
+                        </li>
+                        <li>
+                            <label for="status" hidden> Status: </label>
+                            <select name="status" id="status">
+                                <option value="Not read">Not read</option>
+                                <option value="Read">Read</option>
+                            </select>
+                        </li>
+                        <li>
+                            <button id="addBookSubmit" type="submit">
+                                Let's go!
+                            </button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+    </body>
+</html>

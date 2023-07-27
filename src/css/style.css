@@ -1,39 +1,41 @@
 @import url(./equalize.css);
 @import url(./scrollbar.css);
 @import url(./variables.css);
+@import url(./modal.css);
 
 body {
     min-height: 100vh;
     background: red;
     display: grid;
     grid-template-columns: 20vw 1fr;
-    grid-template-rows: 5rem 1fr;
+    grid-template-rows: 5rem 5rem 1fr;
     color: var(--text);
 }
 button {
     border-radius: 50px;
     padding: 1rem;
+    cursor: pointer;
+}
+li {
+    list-style-type: none;
 }
 #nav {
     background: var(--dark-bg);
     border-bottom: 2px solid var(--border);
     grid-column: 1/-1;
+    grid-row: 1;
     padding: 1rem;
 }
 #leftPanel {
+    grid-row: 2/-1;
+    grid-column: 1;
     background: var(--mid-bg);
     border-right: 2px solid var(--border);
     padding: 1rem;
 }
 #mainContent {
-    display: flex;
-    flex-direction: column;
-}
-#mainContent .buttons {
-    background: var(--mid-bg);
-    padding: 1rem;
-}
-#mainContent .content {
+    grid-row: 3/-1;
+
     flex: 1;
     padding: 1rem;
     background: var(--mid-bg);
@@ -42,7 +44,12 @@ button {
     gap: 1rem;
     justify-items: center;
 }
-#mainContent .content .project {
+#mainButtons {
+    background: var(--mid-bg);
+    padding: 1rem;
+}
+
+#mainContent .card {
     background: var(--light-bg);
     border: 2px solid var(--border);
     border-radius: 10px;
@@ -52,22 +59,26 @@ button {
     gap: 1rem;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
     max-width: 30rem;
 }
-#mainContent .content .name {
+#mainContent .card .name {
     font-size: 2rem;
     font-weight: bold;
 }
-#mainContent .content .description {
+#mainContent .card .description {
 }
 #mainContent ul {
-    padding-left: 2rem;
     flex: 1;
 }
-#mainContent .content progress {
+#mainContent .card progress {
     width: 100%;
     height: 1.5rem;
 }
-#mainContent .content button {
+#mainContent .card button {
     width: 100%;
+}
+#mainContent .card input[type="checkbox"] {
+    width: auto;
+    margin: 0 10px;
 }
