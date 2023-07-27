@@ -1,4 +1,4 @@
-import Storage from "./Storage";
+import Pubsub from "./Pubsub";
 
 export default class UI_List {
     #divCard;
@@ -47,7 +47,6 @@ export default class UI_List {
         //PROGRESS BAR
         const progress = divCard.querySelector("progress");
         progress.max = Object.keys(taskList).length;
-        console.log(amountDone);
         progress.value = amountDone;
 
         this.#divCard = divCard;

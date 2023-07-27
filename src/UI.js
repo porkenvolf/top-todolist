@@ -6,10 +6,11 @@ import UI_List from "./UI_List";
 export default class UI {
     static loadPage() {
         this.body = document.querySelector("body");
+        this.body.innerHTML = "";
         this.#renderNav();
         this.#renderLeftPanel();
 
-        this.#renderLists();
+        this.renderLists();
     }
 
     static #renderLeftPanel() {
@@ -26,7 +27,7 @@ export default class UI {
         element.id = "nav";
         this.body.appendChild(element);
     }
-    static #renderLists() {
+    static renderLists() {
         //BUTTONS
         const mainButtons = document.createElement("div");
         mainButtons.id = "mainButtons";

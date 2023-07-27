@@ -4,9 +4,9 @@ export default class Task {
     #name;
     #isDone;
     #dueDate;
-    constructor(name) {
+    constructor(name, _isDone) {
         this.#name = name;
-        this.#isDone = false;
+        this.#isDone = _isDone;
         this.#dueDate = undefined;
     }
     get name() {
@@ -14,21 +14,19 @@ export default class Task {
     }
     set name(arg) {
         this.#name = arg;
-        Pubsub.emit("updateStorage");
     }
     get isDone() {
         return this.#isDone;
     }
     set isDone(arg) {
         this.#isDone = arg;
-        Pubsub.emit("updateStorage");
+        Pubsub.emit("taskChanged");
     }
     get dueDate() {
         return this.#dueDate;
     }
     set dueDate(arg) {
         this.#dueDate = arg;
-        Pubsub.emit("updateStorage");
     }
     get parse() {
         return {

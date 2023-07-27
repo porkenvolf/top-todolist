@@ -5,7 +5,14 @@ export default class List {
     #tasks = {};
     constructor(_name, _objTasks) {
         this.#name = _name;
-        if (_objTasks) this.#tasks = _objTasks;
+        if (_objTasks) {
+            for (const key in _objTasks) {
+                this.#tasks[key] = new Task(
+                    _objTasks[key].name,
+                    _objTasks[key].isDone
+                );
+            }
+        }
     }
 
     /* newTask(_name) {
