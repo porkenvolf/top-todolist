@@ -7,8 +7,8 @@ export default class Storage {
     static populate() {
         this.#listsStorage.push(
             new List("Default List", {
-                0: { name: "dsa", isDone: false },
-                1: { name: "test", isDone: true },
+                0: { name: "dsa", isDone: true },
+                1: { name: "test", isDone: false },
             })
         );
         this.save();

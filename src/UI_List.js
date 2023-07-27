@@ -19,21 +19,36 @@ export default class UI_List {
             <div class="name">${this.#list.name}</div>
             <ul>
             </ul>
-            <div class="pending">3 pending tasks in 2 lists.</div>
-            <progress max="100" value="70"></progress>
+            <progress></progress>
         `;
 
         const taskList = this.#list.tasks;
-        const ulTasks = divCard.querySelector("ul");
+        let amountDone = 0;
 
+        //UL
+        const ulTasks = divCard.querySelector("ul");
         for (const key in taskList) {
             const li = document.createElement("li");
-            li.innerHTML = `
-            <input type='checkbox' data-taskname='${taskList[key].name}' data-taskid='${key}'>
-            ${taskList[key].name}
-            `;
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = taskList[key].isDone;
+            if (checkbox.checked) amountDone += 1;
+            checkbox.setAttribute("data-taskid", key);
+            li.appendChild(checkbox);
+
+            const label = document.createElement("span");
+            label.innerText = taskList[key].name;
+            li.appendChild(label);
+
             ulTasks.appendChild(li);
         }
+
+        //PROGRESS BAR
+        const progress = divCard.querySelector("progress");
+        progress.max = Object.keys(taskList).length;
+        console.log(amountDone);
+        progress.value = amountDone;
 
         this.#divCard = divCard;
     }
