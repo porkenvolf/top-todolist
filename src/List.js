@@ -49,6 +49,6 @@ export default class List {
         for (const key in this.#tasks) {
             outputTasks[key] = this.#tasks[key].parse;
         }
-        return { name: this.#name, tasks: outputTasks };
+        return { id: this.#id, name: this.#name, tasks: outputTasks };
     }
 }

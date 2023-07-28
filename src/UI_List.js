@@ -27,7 +27,7 @@ export default class UI_List {
         const inputTitle = document.createElement("input");
         inputTitle.type = "text";
         inputTitle.classList.add("name");
-        inputTitle.value = this.#list.name;
+        inputTitle.value = this.#list.id; //this.#list.name;
         divCard.querySelector("#title").appendChild(inputTitle);
 
         //REMOVE LIST

@@ -35,20 +35,23 @@ export default class Storage {
                 key,
                 JSON.stringify(this.#listsStorage[key].parse)
             );
-            const saveCheck = localStorage.getItem(key);
+            const saveCheck = localStorage;
+            console.log(saveCheck);
         }
     }
     static load() {
+        //localStorage.clear();
         console.log(localStorage);
-        localStorage.clear();
         this.#listsStorage = {};
-        for (let i = 0; i < localStorage.length; i++) {
-            const item = JSON.parse(localStorage[i]);
-            this.#listsStorage[item.id] = new List(
-                this.#listsStorage.length,
-                item.name,
-                item.tasks
-            );
+        for (const key in localStorage) {
+            if (Object.hasOwnProperty.call(localStorage, key)) {
+                const item = JSON.parse(localStorage[key]);
+                this.#listsStorage[item.id] = new List(
+                    key,
+                    item.name,
+                    item.tasks
+                );
+            }
         }
     }
 
