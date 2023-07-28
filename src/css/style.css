@@ -1,7 +1,6 @@
 @import url(./equalize.css);
 @import url(./scrollbar.css);
 @import url(./variables.css);
-@import url(./modal.css);
 
 body {
     min-height: 100vh;
@@ -19,6 +18,8 @@ button {
 li {
     list-style-type: none;
     display: flex;
+    align-items: center;
+    border: 2px solid transparent;
 }
 #nav {
     background: var(--dark-bg);
@@ -91,4 +92,19 @@ li {
     width: 100%;
     color: var(--text);
     padding: 5px;
+}
+#mainContent .card .parentHoverButton {
+    padding: 5px;
+    margin: 0;
+    width: 2rem;
+    background-color: transparent;
+    height: 100%;
+    filter: opacity(0);
+}
+#mainContent .card li:hover .parentHoverButton {
+    filter: opacity(1) invert(1) brightness(80%);
+}
+#mainContent .card li:hover {
+    border-top: 2px solid var(--border);
+    border-bottom: 2px solid var(--border);
 }

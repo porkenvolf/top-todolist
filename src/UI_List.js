@@ -1,5 +1,6 @@
 import Pubsub from "./Pubsub";
 import Task from "./Task";
+import imgClose from "./img/close.svg";
 
 export default class UI_List {
     #divCard;
@@ -31,6 +32,7 @@ export default class UI_List {
         for (const key in taskList) {
             const li = document.createElement("li");
 
+            //EACH CHECKBOX
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.checked = taskList[key].isDone;
@@ -38,12 +40,20 @@ export default class UI_List {
             checkbox.setAttribute("data-taskid", key);
             li.appendChild(checkbox);
 
+            //EACH LABEL/INPUT
             const label = document.createElement("input");
             label.classList.add("task");
             label.type = "text";
             label.setAttribute("data-taskid", key);
             label.value = taskList[key].name;
             li.appendChild(label);
+
+            //EACH removeTask BUTTON
+            const removeTask = document.createElement("img");
+            removeTask.src = imgClose;
+            removeTask.classList = "parentHoverButton";
+            removeTask.setAttribute("data-taskid", key);
+            li.appendChild(removeTask);
 
             ulTasks.appendChild(li);
         }
@@ -103,13 +113,24 @@ export default class UI_List {
             });
         });
 
-        //ADD NEW TASK
+        //ADD NEW TASK INPUT
         const addNewTask = this.#divCard.querySelector(".newTask");
         addNewTask.addEventListener("change", (event) => {
             const newID = Object.keys(this.#list.tasks).length;
             this.#list.tasks[newID] = new Task(event.target.value, false);
 
             Pubsub.emit("reloadPage");
+        });
+
+        //EACH removeTask BUTTON
+        const removeTask = this.#divCard.querySelectorAll(".parentHoverButton");
+        removeTask.forEach((element) => {
+            element.addEventListener("click", (event) => {
+                delete this.#list.tasks[
+                    event.target.getAttribute("data-taskid")
+                ];
+                Pubsub.emit("reloadPage");
+            });
         });
     }
 }
