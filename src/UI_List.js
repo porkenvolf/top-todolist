@@ -37,8 +37,11 @@ export default class UI_List {
             checkbox.setAttribute("data-taskid", key);
             li.appendChild(checkbox);
 
-            const label = document.createElement("span");
-            label.innerText = taskList[key].name;
+            const label = document.createElement("input");
+            label.classList.add("task");
+            label.type = "text";
+            label.setAttribute("data-taskid", key);
+            label.value = taskList[key].name;
             li.appendChild(label);
 
             ulTasks.appendChild(li);
@@ -68,6 +71,16 @@ export default class UI_List {
                 const id = event.target.getAttribute("data-taskid");
                 const task = this.#list.tasks[id];
                 task.isDone = event.target.checked;
+            });
+        });
+
+        //TASKS
+        const tasks = this.#divCard.querySelectorAll(".task");
+        tasks.forEach((task) => {
+            task.addEventListener("change", (event) => {
+                const id = event.target.getAttribute("data-taskid");
+                const task = this.#list.tasks[id];
+                task.name = event.target.value;
             });
         });
     }

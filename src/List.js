@@ -34,6 +34,9 @@ export default class List {
     get tasks() {
         return this.#tasks;
     }
+    set tasks(arg) {
+        Pubsub.emit("reloadPage");
+    }
     get name() {
         return this.#name;
     }
