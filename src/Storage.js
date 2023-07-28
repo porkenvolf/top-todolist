@@ -6,7 +6,7 @@ export default class Storage {
 
     static populate() {
         this.#listsStorage.push(
-            new List("Default List", {
+            new List(this.#listsStorage.length, "Default List", {
                 0: { name: "dsa", isDone: true },
                 1: { name: "test", isDone: false },
             })
@@ -15,7 +15,9 @@ export default class Storage {
     }
 
     static createList() {
-        this.#listsStorage.push(new List("New List", {}));
+        this.#listsStorage.push(
+            new List(this.#listsStorage.length, "New List", {})
+        );
     }
 
     static save() {

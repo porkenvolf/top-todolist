@@ -65,7 +65,12 @@ li {
 #mainContent .card .name {
     font-size: 2rem;
     font-weight: bold;
+    color: var(--text);
+    width: 100%;
+    background: transparent;
+    border: none;
 }
+
 #mainContent .card .description {
 }
 #mainContent ul {

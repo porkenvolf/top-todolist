@@ -1,9 +1,12 @@
 import Task from "./Task";
+import Pubsub from "./Pubsub";
 
 export default class List {
+    #id;
     #name;
     #tasks = {};
-    constructor(_name, _objTasks) {
+    constructor(_id, _name, _objTasks) {
+        this.#id = _id;
         this.#name = _name;
         if (_objTasks) {
             for (const key in _objTasks) {
@@ -36,6 +39,10 @@ export default class List {
     }
     set name(arg) {
         this.#name = arg;
+        Pubsub.emit("reloadPage");
+    }
+    get id() {
+        return this.#id;
     }
     get parse() {
         return { name: this.#name, tasks: this.#tasks };

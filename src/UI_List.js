@@ -16,7 +16,7 @@ export default class UI_List {
         divCard.classList.add("card");
 
         divCard.innerHTML = `
-            <div class="name">${this.#list.name}</div>
+            <input class=name type='text' value='${this.#list.name}'>
             <ul>
             </ul>
             <progress></progress>
@@ -52,7 +52,17 @@ export default class UI_List {
         this.#divCard = divCard;
     }
     #bindEvents() {
-        const checkBoxes = this.#divCard.querySelectorAll("input");
+        //CARD NAME
+        const cardName = this.#divCard.querySelector(".name");
+        cardName.addEventListener("change", (event) => {
+            event.preventDefault();
+            this.#list.name = event.target.value;
+        });
+
+        //CHECKBOXES
+        const checkBoxes = this.#divCard.querySelectorAll(
+            'input[type="checkbox"]'
+        );
         checkBoxes.forEach((element) => {
             element.addEventListener("click", (event) => {
                 const id = event.target.getAttribute("data-taskid");
