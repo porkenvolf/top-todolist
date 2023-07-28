@@ -1,22 +1,22 @@
 import List from "./List";
 
 export default class Storage {
-    static #listsStorage = [];
+    static #listsStorage = {};
     static #testStorage = [];
 
-    static populate() {
-        this.#listsStorage.push(
-            new List(this.#listsStorage.length, "Default List", {
-                0: { name: "dsa", isDone: true },
-                1: { name: "test", isDone: false },
-            })
-        );
-    }
+    /*  static populate() {
+        this.#listsStorage = Object.assign({});
+        new List(this.#listsStorage.length, "Default List", {
+            0: { name: "dsa", isDone: true },
+            1: { name: "test", isDone: false },
+        });
+    } */
 
-    static createList() {
-        this.#listsStorage.push(
-            new List(this.#listsStorage.length, "New List", {})
-        );
+    static newList() {
+        const newID = Math.random();
+        const newList = new List(newID, "New List", {});
+        console.log(newList);
+        this.#listsStorage[newID] = newList;
     }
 
     static clear() {
@@ -26,21 +26,28 @@ export default class Storage {
     static save() {
         localStorage.clear();
 
-        this.#listsStorage.forEach((list, index) => {
+        /* this.#listsStorage.forEach((list, index) => {
             localStorage.setItem(index, JSON.stringify(list.parse));
             const saveCheck = localStorage.getItem(index);
-        });
+        }); */
+        for (const key in this.#listsStorage) {
+            localStorage.setItem(
+                key,
+                JSON.stringify(this.#listsStorage[key].parse)
+            );
+            const saveCheck = localStorage.getItem(key);
+        }
     }
     static load() {
-        console.log("loading");
         console.log(localStorage);
-
-        this.#listsStorage = [];
+        localStorage.clear();
+        this.#listsStorage = {};
         for (let i = 0; i < localStorage.length; i++) {
             const item = JSON.parse(localStorage[i]);
-            console.log(item);
-            this.#listsStorage.push(
-                new List(this.#listsStorage.length, item.name, item.tasks)
+            this.#listsStorage[item.id] = new List(
+                this.#listsStorage.length,
+                item.name,
+                item.tasks
             );
         }
     }

@@ -18,16 +18,27 @@ export default class UI_List {
         divCard.classList.add("card");
 
         divCard.innerHTML = `
-            <input class=name type='text' value='${this.#list.name}'>
+            <div id='title'></div>
             <ul>
             </ul>
             <progress></progress>
         `;
+        //INPUT TITLE
+        const inputTitle = document.createElement("input");
+        inputTitle.type = "text";
+        inputTitle.classList.add("name");
+        inputTitle.value = this.#list.name;
+        divCard.querySelector("#title").appendChild(inputTitle);
 
+        //REMOVE LIST
+        const removeList = document.createElement("img");
+        removeList.src = imgClose;
+        removeList.classList = "parentHoverRemoveList";
+        divCard.querySelector("#title").appendChild(removeList);
+
+        //TASKS
         const taskList = this.#list.tasks;
         let amountDone = 0;
-
-        //UL
         const ulTasks = divCard.querySelector("ul");
         for (const key in taskList) {
             const li = document.createElement("li");
@@ -51,7 +62,7 @@ export default class UI_List {
             //EACH removeTask BUTTON
             const removeTask = document.createElement("img");
             removeTask.src = imgClose;
-            removeTask.classList = "parentHoverButton";
+            removeTask.classList = "parentHoverRemoveTask";
             removeTask.setAttribute("data-taskid", key);
             li.appendChild(removeTask);
 
@@ -89,6 +100,14 @@ export default class UI_List {
             Pubsub.emit("reloadPage");
         });
 
+        //REMOVE LIST
+        const removeList = this.#divCard.querySelector(
+            ".parentHoverRemoveList"
+        );
+        removeList.addEventListener("click", (event) => {
+            Pubsub.emit("removeList", this.#list);
+        });
+
         //CHECKBOXES
         const checkBoxes = this.#divCard.querySelectorAll(
             'input[type="checkbox"]'
@@ -116,14 +135,16 @@ export default class UI_List {
         //ADD NEW TASK INPUT
         const addNewTask = this.#divCard.querySelector(".newTask");
         addNewTask.addEventListener("change", (event) => {
-            const newID = Object.keys(this.#list.tasks).length;
+            const newID = Math.random();
             this.#list.tasks[newID] = new Task(event.target.value, false);
 
             Pubsub.emit("reloadPage");
         });
 
         //EACH removeTask BUTTON
-        const removeTask = this.#divCard.querySelectorAll(".parentHoverButton");
+        const removeTask = this.#divCard.querySelectorAll(
+            ".parentHoverRemoveTask"
+        );
         removeTask.forEach((element) => {
             element.addEventListener("click", (event) => {
                 delete this.#list.tasks[

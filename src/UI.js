@@ -38,7 +38,6 @@ export default class UI {
         mainButtons.appendChild(btnNewList);
         btnNewList.addEventListener("click", (event) => {
             Pubsub.emit("newList");
-            Pubsub.emit("reloadPage");
         });
 
         //MAIN CONTENT
@@ -47,9 +46,10 @@ export default class UI {
         this.body.appendChild(mainContent);
 
         const lists = Storage.listsStorage;
-        lists.forEach((element) => {
-            mainContent.appendChild(new UI_List(element));
-        });
+
+        for (const key in lists) {
+            mainContent.appendChild(new UI_List(lists[key]));
+        }
     }
     static #renderProjects() {
         //BUTTONS
@@ -60,9 +60,7 @@ export default class UI {
         const btnNewProject = document.createElement("button");
         btnNewProject.innerText = "New Project";
         mainButtons.appendChild(btnNewProject);
-        btnNewProject.addEventListener("click", (event) => {
-            this.#renderNewProjectModal();
-        });
+        btnNewProject.addEventListener("click", (event) => {});
 
         //MAIN CONTENT
         const mainContent = document.createElement("div");
@@ -103,14 +101,6 @@ export default class UI {
         const btnNewProject = document.createElement("button");
         btnNewProject.innerText = "New Project";
         mainButtons.appendChild(btnNewProject);
-        btnNewProject.addEventListener("click", (event) => {
-            this.#renderNewProjectModal();
-        });
-    }
-    static #renderNewProjectModal() {
-        const modal = document.createElement("div");
-        modal.classList.add("modal");
-
-        this.body.appendChild(modal);
+        btnNewProject.addEventListener("click", (event) => {});
     }
 }

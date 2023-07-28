@@ -9,7 +9,6 @@ export default class EventsInterface {
         });
         Pubsub.on("load", () => {
             Storage.load();
-            //Storage.clear();
         });
 
         Pubsub.on("reloadPage", () => {
@@ -17,8 +16,14 @@ export default class EventsInterface {
             UI.loadPage();
         });
         Pubsub.on("newList", () => {
-            Storage.createList();
-            UI.loadPage();
+            Storage.newList();
+            Pubsub.emit("reloadPage");
+        });
+        Pubsub.on("removeList", (data) => {
+            console.log(data.id);
+            delete Storage.listsStorage[data.id];
+
+            Pubsub.emit("reloadPage");
         });
     }
 }
