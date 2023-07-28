@@ -37,7 +37,7 @@ export default class UI {
         btnNewProject.innerText = "New List";
         mainButtons.appendChild(btnNewProject);
         btnNewProject.addEventListener("click", (event) => {
-            this.#renderNewProjectModal();
+            Pubsub.emit("newList");
         });
 
         //MAIN CONTENT

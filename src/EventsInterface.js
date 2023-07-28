@@ -7,5 +7,9 @@ export default class EventsInterface {
         Pubsub.on("taskChanged", () => {
             UI.loadPage();
         });
+        Pubsub.on("newList", () => {
+            Storage.createList();
+            UI.loadPage();
+        });
     }
 }

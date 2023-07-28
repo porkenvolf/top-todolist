@@ -14,6 +14,10 @@ export default class Storage {
         this.save();
     }
 
+    static createList() {
+        this.#listsStorage.push(new List("New List", {}));
+    }
+
     static save() {
         localStorage.clear();
 
