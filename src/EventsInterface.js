@@ -4,10 +4,16 @@ import UI from "./UI";
 
 export default class EventsInterface {
     static bindEvents() {
-        Pubsub.on("checkStorage", () => {
-            console.log(Storage.listsStorage);
+        Pubsub.on("save", () => {
+            Storage.save();
         });
+        Pubsub.on("load", () => {
+            Storage.load();
+            //Storage.clear();
+        });
+
         Pubsub.on("reloadPage", () => {
+            Pubsub.emit("save");
             UI.loadPage();
         });
         Pubsub.on("newList", () => {

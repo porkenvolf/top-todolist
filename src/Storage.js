@@ -11,7 +11,6 @@ export default class Storage {
                 1: { name: "test", isDone: false },
             })
         );
-        this.save();
     }
 
     static createList() {
@@ -20,20 +19,29 @@ export default class Storage {
         );
     }
 
+    static clear() {
+        localStorage.clear();
+    }
+
     static save() {
         localStorage.clear();
 
         this.#listsStorage.forEach((list, index) => {
             localStorage.setItem(index, JSON.stringify(list.parse));
+            const saveCheck = localStorage.getItem(index);
         });
-
-        this.load();
     }
     static load() {
-        let buffer = {};
+        console.log("loading");
+        console.log(localStorage);
+
+        this.#listsStorage = [];
         for (let i = 0; i < localStorage.length; i++) {
             const item = JSON.parse(localStorage[i]);
-            this.#testStorage.push(new List(item.name, item.tasks));
+            console.log(item);
+            this.#listsStorage.push(
+                new List(this.#listsStorage.length, item.name, item.tasks)
+            );
         }
     }
 

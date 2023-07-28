@@ -33,11 +33,12 @@ export default class UI {
         mainButtons.id = "mainButtons";
         this.body.appendChild(mainButtons);
 
-        const btnNewProject = document.createElement("button");
-        btnNewProject.innerText = "New List";
-        mainButtons.appendChild(btnNewProject);
-        btnNewProject.addEventListener("click", (event) => {
+        const btnNewList = document.createElement("button");
+        btnNewList.innerText = "New List";
+        mainButtons.appendChild(btnNewList);
+        btnNewList.addEventListener("click", (event) => {
             Pubsub.emit("newList");
+            Pubsub.emit("reloadPage");
         });
 
         //MAIN CONTENT

@@ -20,7 +20,6 @@ export default class Task {
     }
     set isDone(arg) {
         this.#isDone = arg;
-        Pubsub.emit("reloadPage");
     }
     get dueDate() {
         return this.#dueDate;

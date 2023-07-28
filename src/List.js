@@ -34,20 +34,21 @@ export default class List {
     get tasks() {
         return this.#tasks;
     }
-    set tasks(arg) {
-        Pubsub.emit("reloadPage");
-    }
+    set tasks(arg) {}
     get name() {
         return this.#name;
     }
     set name(arg) {
         this.#name = arg;
-        Pubsub.emit("reloadPage");
     }
     get id() {
         return this.#id;
     }
     get parse() {
-        return { name: this.#name, tasks: this.#tasks };
+        let outputTasks = {};
+        for (const key in this.#tasks) {
+            outputTasks[key] = this.#tasks[key].parse;
+        }
+        return { name: this.#name, tasks: outputTasks };
     }
 }

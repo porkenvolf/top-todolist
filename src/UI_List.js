@@ -76,6 +76,7 @@ export default class UI_List {
         cardName.addEventListener("change", (event) => {
             event.preventDefault();
             this.#list.name = event.target.value;
+            Pubsub.emit("reloadPage");
         });
 
         //CHECKBOXES
@@ -87,6 +88,7 @@ export default class UI_List {
                 const id = event.target.getAttribute("data-taskid");
                 const task = this.#list.tasks[id];
                 task.isDone = event.target.checked;
+                Pubsub.emit("reloadPage");
             });
         });
 
@@ -97,6 +99,7 @@ export default class UI_List {
                 const id = event.target.getAttribute("data-taskid");
                 const task = this.#list.tasks[id];
                 task.name = event.target.value;
+                Pubsub.emit("reloadPage");
             });
         });
 
