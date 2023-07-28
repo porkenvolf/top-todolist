@@ -1,4 +1,5 @@
 import Pubsub from "./Pubsub";
+import Task from "./Task";
 
 export default class UI_List {
     #divCard;
@@ -47,6 +48,21 @@ export default class UI_List {
             ulTasks.appendChild(li);
         }
 
+        //ADD NEW TASK
+        const newTask = document.createElement("li");
+        const newTaskLabel = document.createElement("input");
+        newTaskLabel.type = "text";
+        newTaskLabel.classList.add("newTask");
+        newTaskLabel.placeholder = "Add new task";
+        newTaskLabel.innerText = "";
+
+        const disabledCheckbox = document.createElement("input");
+        disabledCheckbox.type = "checkbox";
+        disabledCheckbox.disabled = true;
+        newTask.appendChild(disabledCheckbox);
+        newTask.appendChild(newTaskLabel);
+        ulTasks.appendChild(newTask);
+
         //PROGRESS BAR
         const progress = divCard.querySelector("progress");
         progress.max = Object.keys(taskList).length;
@@ -82,6 +98,15 @@ export default class UI_List {
                 const task = this.#list.tasks[id];
                 task.name = event.target.value;
             });
+        });
+
+        //ADD NEW TASK
+        const addNewTask = this.#divCard.querySelector(".newTask");
+        addNewTask.addEventListener("change", (event) => {
+            const newID = Object.keys(this.#list.tasks).length;
+            this.#list.tasks[newID] = new Task(event.target.value, false);
+
+            Pubsub.emit("reloadPage");
         });
     }
 }

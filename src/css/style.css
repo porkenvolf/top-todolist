@@ -69,8 +69,6 @@ li {
     color: var(--text);
 }
 
-#mainContent .card .description {
-}
 #mainContent ul {
     flex: 1;
     display: flex;
