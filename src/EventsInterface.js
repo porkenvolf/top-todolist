@@ -20,7 +20,6 @@ export default class EventsInterface {
             Pubsub.emit("reloadPage");
         });
         Pubsub.on("removeList", (data) => {
-            console.log(data.id);
             delete Storage.listsStorage[data.id];
 
             Pubsub.emit("reloadPage");

@@ -15,7 +15,6 @@ export default class Storage {
     static newList() {
         const newID = Math.random();
         const newList = new List(newID, "New List", {});
-        console.log(newList);
         this.#listsStorage[newID] = newList;
     }
 
@@ -35,13 +34,9 @@ export default class Storage {
                 key,
                 JSON.stringify(this.#listsStorage[key].parse)
             );
-            const saveCheck = localStorage;
-            console.log(saveCheck);
         }
     }
     static load() {
-        //localStorage.clear();
-        console.log(localStorage);
         this.#listsStorage = {};
         for (const key in localStorage) {
             if (Object.hasOwnProperty.call(localStorage, key)) {

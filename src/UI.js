@@ -8,17 +8,19 @@ export default class UI {
         this.body = document.querySelector("body");
         this.body.innerHTML = "";
         this.#renderNav();
-        this.#renderLeftPanel();
+        /*  this.#renderLeftPanel(); */
 
-        this.renderLists();
+        this.#renderLists();
     }
 
     static #renderLeftPanel() {
         const element = document.createElement("div");
         element.innerHTML = `
-            <h2>Dashboard</h2>
+            <h1>Filters</h1>
+            <h2>Tags</h2>
         `;
         element.id = "leftPanel";
+
         this.body.appendChild(element);
     }
     static #renderNav() {
@@ -27,7 +29,7 @@ export default class UI {
         element.id = "nav";
         this.body.appendChild(element);
     }
-    static renderLists() {
+    static #renderLists() {
         //BUTTONS
         const mainButtons = document.createElement("div");
         mainButtons.id = "mainButtons";

@@ -5,6 +5,7 @@ export default class List {
     #id;
     #name;
     #tasks = {};
+    #tags = [];
     constructor(_id, _name, _objTasks) {
         this.#id = _id;
         this.#name = _name;
@@ -17,19 +18,6 @@ export default class List {
             }
         }
     }
-
-    /* newTask(_name) {
-        let name;
-        if (_name) {
-            name = _name;
-        } else {
-            const error = "The new task must have a name";
-            console.error(error);
-            return error;
-        }
-        const newTask = new Task(name);
-        this.#tasks.push(newTask);
-    } */
 
     get tasks() {
         return this.#tasks;

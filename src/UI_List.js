@@ -1,12 +1,15 @@
 import Pubsub from "./Pubsub";
 import Task from "./Task";
 import imgClose from "./img/close.svg";
+import imgPlus from "./img/plus.svg";
 
 export default class UI_List {
     #divCard;
     #list;
+    color;
     constructor(element) {
         this.#list = element;
+        this.color = { h: element.id * 255, s: 70, l: 70 };
         this.#render();
         this.#bindEvents();
 
@@ -16,18 +19,21 @@ export default class UI_List {
     #render() {
         const divCard = document.createElement("div");
         divCard.classList.add("card");
+        divCard.style.borderTop = `20px solid hsl(
+            ${this.color.h},
+            ${this.color.s}%,
+            ${this.color.l}%)`;
 
         divCard.innerHTML = `
             <div id='title'></div>
             <ul>
             </ul>
-            <progress></progress>
         `;
         //INPUT TITLE
         const inputTitle = document.createElement("input");
         inputTitle.type = "text";
         inputTitle.classList.add("name");
-        inputTitle.value = this.#list.id; //this.#list.name;
+        inputTitle.value = this.#list.name;
         divCard.querySelector("#title").appendChild(inputTitle);
 
         //REMOVE LIST
@@ -77,23 +83,22 @@ export default class UI_List {
         newTaskLabel.placeholder = "Add new task";
         newTaskLabel.innerText = "";
 
-        const disabledCheckbox = document.createElement("input");
-        disabledCheckbox.type = "checkbox";
-        disabledCheckbox.disabled = true;
-        newTask.appendChild(disabledCheckbox);
+        const plus = document.createElement("img");
+        plus.src = imgPlus;
+        plus.classList.add("plusIcon");
+        newTask.appendChild(plus);
         newTask.appendChild(newTaskLabel);
         ulTasks.appendChild(newTask);
 
-        //PROGRESS BAR
-        const progress = divCard.querySelector("progress");
-        progress.max = Object.keys(taskList).length;
-        progress.value = amountDone;
-
+        //ADD TO OBJECT
         this.#divCard = divCard;
     }
     #bindEvents() {
         //CARD NAME
         const cardName = this.#divCard.querySelector(".name");
+        cardName.addEventListener("click", (event) => {
+            event.target.select();
+        });
         cardName.addEventListener("change", (event) => {
             event.preventDefault();
             this.#list.name = event.target.value;
