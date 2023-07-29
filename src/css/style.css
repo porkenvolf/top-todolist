@@ -143,3 +143,17 @@ li {
     margin: 0 10px;
     filter: invert(1) brightness(70%);
 }
+@media (pointer: none), (pointer: coarse) {
+    #mainContent .card #title .parentHoverRemoveList {
+        filter: opacity(1) invert(1) brightness(80%);
+    }
+    #mainContent .card .parentHoverRemoveTask {
+        filter: opacity(1) invert(1) brightness(80%);
+    }
+    li:last-child {
+        border-bottom: none;
+    }
+    li {
+        border-bottom: 2px solid var(--border);
+    }
+}
