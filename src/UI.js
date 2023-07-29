@@ -2,15 +2,15 @@ import "./css/style.css";
 import Pubsub from "./Pubsub";
 import Storage from "./Storage";
 import UI_List from "./UI_List";
+import { renderFooter } from "./footer";
 
 export default class UI {
     static loadPage() {
         this.body = document.querySelector("body");
         this.body.innerHTML = "";
         this.#renderNav();
-        /*  this.#renderLeftPanel(); */
-
         this.#renderLists();
+        this.body.appendChild(renderFooter("2023"));
     }
 
     static #renderLeftPanel() {

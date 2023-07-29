@@ -1,6 +1,7 @@
 @import url(./equalize.css);
 @import url(./scrollbar.css);
 @import url(./variables.css);
+@import url(./footer.css);
 
 body {
     min-height: 100vh;

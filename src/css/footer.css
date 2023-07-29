@@ -1,0 +1,9 @@
+footer {
+    background: var(--bg-dark);
+    width: 100vw;
+    text-align: center;
+    border-top: 2px solid var(--border);
+}
+footer a {
+    color: var(--text);
+}
