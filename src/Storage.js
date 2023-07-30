@@ -3,10 +3,6 @@ import List from "./List";
 export default class Storage {
     static #listsStorage = {};
 
-    static clear() {
-        localStorage.clear();
-    }
-
     static save() {
         localStorage.clear();
         const dataArray = [];
@@ -18,8 +14,6 @@ export default class Storage {
             "data",
             JSON.stringify(Array.from(dataMap.entries()))
         );
-        const saveCheck = localStorage;
-        console.log(saveCheck);
     }
     static load() {
         this.#listsStorage = {};
@@ -27,7 +21,6 @@ export default class Storage {
         const storedData = JSON.parse(localStorage.getItem("data"));
         if (!storedData) return;
         storedData.forEach((element) => {
-            console.log(element);
             const id = element[0];
             const list = element[1];
             this.#listsStorage[id] = new List(id, list.name, list.tasks);

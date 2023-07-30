@@ -1,5 +1,4 @@
 import Pubsub from "./Pubsub";
-import Task from "./Task";
 import imgClose from "./img/close.svg";
 import imgPlus from "./img/plus.svg";
 
