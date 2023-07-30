@@ -3,49 +3,77 @@ import Task from "./Task";
 import imgClose from "./img/close.svg";
 import imgPlus from "./img/plus.svg";
 
-export default class UI_List {
-    #divCard;
+class inputTitle {
     #list;
-    color;
-    constructor(element) {
-        this.#list = element;
-        this.color = { h: element.id * 255, s: 70, l: 70 };
-        this.#render();
+    #output;
+    constructor(list) {
+        this.#list = list;
+        this.#output = this.#render();
         this.#bindEvents();
-
-        return this.#divCard;
     }
-
     #render() {
-        const divCard = document.createElement("div");
-        divCard.classList.add("card");
-        divCard.style.borderTop = `20px solid hsl(
-            ${this.color.h},
-            ${this.color.s}%,
-            ${this.color.l}%)`;
-
-        divCard.innerHTML = `
-            <div id='title'></div>
-            <ul>
-            </ul>
-        `;
-        //INPUT TITLE
         const inputTitle = document.createElement("input");
         inputTitle.type = "text";
         inputTitle.classList.add("name");
         inputTitle.value = this.#list.name;
-        divCard.querySelector("#title").appendChild(inputTitle);
+        return inputTitle;
+    }
+    #bindEvents() {
+        const cardName = this.#output;
+        cardName.addEventListener("click", (event) => {
+            event.target.select();
+        });
+        cardName.addEventListener("change", (event) => {
+            event.preventDefault();
+            Pubsub.emit("updateListName", {
+                id: this.#list.id,
+                newName: event.target.value,
+            });
+            Pubsub.emit("reloadPage");
+        });
+    }
+    get output() {
+        return this.#output;
+    }
+}
 
-        //REMOVE LIST
+class btnRemoveList {
+    #list;
+    #output;
+    constructor(list) {
+        this.#list = list;
+        this.#output = this.#render();
+        this.#bindEvents();
+    }
+    #render() {
         const removeList = document.createElement("img");
         removeList.src = imgClose;
-        removeList.classList = "parentHoverRemoveList";
-        divCard.querySelector("#title").appendChild(removeList);
+        removeList.classList.add("parentHoverRemoveList");
+        return removeList;
+    }
+    #bindEvents() {
+        const removeList = this.#output;
+        removeList.addEventListener("click", () => {
+            Pubsub.emit("removeList", this.#list);
+            Pubsub.emit("reloadPage");
+        });
+    }
+    get output() {
+        return this.#output;
+    }
+}
 
-        //TASKS
+class taskList {
+    #list;
+    #output;
+    constructor(list) {
+        this.#list = list;
+        this.#output = this.#render();
+        this.#bindEvents();
+    }
+    #render() {
         const taskList = this.#list.tasks;
-        let amountDone = 0;
-        const ulTasks = divCard.querySelector("ul");
+        const ulTasks = document.createElement("ul");
         for (const key in taskList) {
             const li = document.createElement("li");
 
@@ -53,7 +81,6 @@ export default class UI_List {
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.checked = taskList[key].isDone;
-            if (checkbox.checked) amountDone += 1;
             checkbox.setAttribute("data-taskid", key);
             li.appendChild(checkbox);
 
@@ -63,6 +90,8 @@ export default class UI_List {
             label.type = "text";
             label.setAttribute("data-taskid", key);
             label.value = taskList[key].name;
+            if (taskList[key].isDone) label.classList.add("isDone");
+
             li.appendChild(label);
 
             //EACH removeTask BUTTON
@@ -90,44 +119,25 @@ export default class UI_List {
         newTask.appendChild(newTaskLabel);
         ulTasks.appendChild(newTask);
 
-        //ADD TO OBJECT
-        this.#divCard = divCard;
+        return ulTasks;
     }
     #bindEvents() {
-        //CARD NAME
-        const cardName = this.#divCard.querySelector(".name");
-        cardName.addEventListener("click", (event) => {
-            event.target.select();
-        });
-        cardName.addEventListener("change", (event) => {
-            event.preventDefault();
-            this.#list.name = event.target.value;
-            Pubsub.emit("reloadPage");
-        });
-
-        //REMOVE LIST
-        const removeList = this.#divCard.querySelector(
-            ".parentHoverRemoveList"
-        );
-        removeList.addEventListener("click", (event) => {
-            Pubsub.emit("removeList", this.#list);
-        });
-
         //CHECKBOXES
-        const checkBoxes = this.#divCard.querySelectorAll(
+        const checkBoxes = this.#output.querySelectorAll(
             'input[type="checkbox"]'
         );
         checkBoxes.forEach((element) => {
             element.addEventListener("click", (event) => {
-                const id = event.target.getAttribute("data-taskid");
-                const task = this.#list.tasks[id];
-                task.isDone = event.target.checked;
+                const listID = this.#list.id;
+                const taskID = event.target.getAttribute("data-taskid");
+                const newIsDone = event.target.checked;
+                Pubsub.emit("updateIsDone", { listID, taskID, newIsDone });
                 Pubsub.emit("reloadPage");
             });
         });
 
         //TASKS
-        const tasks = this.#divCard.querySelectorAll(".task");
+        const tasks = this.#output.querySelectorAll(".task");
         tasks.forEach((task) => {
             task.addEventListener("change", (event) => {
                 const id = event.target.getAttribute("data-taskid");
@@ -138,16 +148,17 @@ export default class UI_List {
         });
 
         //ADD NEW TASK INPUT
-        const addNewTask = this.#divCard.querySelector(".newTask");
+        const addNewTask = this.#output.querySelector(".newTask");
         addNewTask.addEventListener("change", (event) => {
-            const newID = Math.random();
-            this.#list.tasks[newID] = new Task(event.target.value, false);
-
+            const name = event.target.value;
+            const isDone = false;
+            const listID = this.#list.id;
+            Pubsub.emit("newTask", { name, isDone, listID });
             Pubsub.emit("reloadPage");
         });
 
         //EACH removeTask BUTTON
-        const removeTask = this.#divCard.querySelectorAll(
+        const removeTask = this.#output.querySelectorAll(
             ".parentHoverRemoveTask"
         );
         removeTask.forEach((element) => {
@@ -159,4 +170,55 @@ export default class UI_List {
             });
         });
     }
+    get output() {
+        return this.#output;
+    }
+}
+
+export default class UI_List {
+    #divCard;
+    #list;
+    color;
+    constructor(element) {
+        this.#list = element;
+        this.color = { h: element.id * 255, s: 70, l: 70 };
+        this.#render();
+        this.#bindEvents();
+
+        return this.#divCard;
+    }
+
+    #render() {
+        const divCard = document.createElement("div");
+        divCard.classList.add("card");
+        divCard.style.borderTop = `20px solid hsl(
+            ${this.color.h},
+            ${this.color.s}%,
+            ${this.color.l}%)`;
+
+        divCard.innerHTML = `
+            <div id='title'></div>
+        `;
+        //TITLE
+        divCard
+            .querySelector("#title")
+            .appendChild(new inputTitle(this.#list).output);
+
+        //REMOVE LIST
+        divCard
+            .querySelector("#title")
+            .appendChild(new btnRemoveList(this.#list).output);
+
+        //TASKS
+        divCard.appendChild(new taskList(this.#list).output);
+
+        /* //DUE DATE
+        const dueDate = document.createElement("div");
+        dueDate.innerText = "Due Date";
+        divCard.appendChild(dueDate); */
+
+        //ADD TO OBJECT
+        this.#divCard = divCard;
+    }
+    #bindEvents() {}
 }

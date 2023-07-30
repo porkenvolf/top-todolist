@@ -13,16 +13,6 @@ export default class UI {
         this.body.appendChild(renderFooter("2023"));
     }
 
-    static #renderLeftPanel() {
-        const element = document.createElement("div");
-        element.innerHTML = `
-            <h1>Filters</h1>
-            <h2>Tags</h2>
-        `;
-        element.id = "leftPanel";
-
-        this.body.appendChild(element);
-    }
     static #renderNav() {
         const element = document.createElement("div");
         element.innerHTML = `DewDew.it`;
@@ -52,57 +42,5 @@ export default class UI {
         for (const key in lists) {
             mainContent.appendChild(new UI_List(lists[key]));
         }
-    }
-    static #renderProjects() {
-        //BUTTONS
-        const mainButtons = document.createElement("div");
-        mainButtons.id = "mainButtons";
-        this.body.appendChild(mainButtons);
-
-        const btnNewProject = document.createElement("button");
-        btnNewProject.innerText = "New Project";
-        mainButtons.appendChild(btnNewProject);
-        btnNewProject.addEventListener("click", (event) => {});
-
-        //MAIN CONTENT
-        const mainContent = document.createElement("div");
-        mainContent.id = "mainContent";
-        this.body.appendChild(mainContent);
-
-        mainContent.innerHTML = `
-                    <div class="content">
-                        <div class="card">
-                            <div class="name">Project 1</div>
-                            <div class="description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Suscipit, dolorem autem rem maiores sunt fugit! Magni
-                                consectetur tenetur placeat ipsam nesciunt beatae
-                                deserunt nisi aut.
-                            </div>
-
-                            <h2>Active Lists</h2>
-                            <ul>
-                                <li>List 1</li>
-                                <li>List 2</li>
-                                <li>List 3</li>
-                                <li>List 4</li>
-                            </ul>
-                            <div class="pending">3 pending tasks in 2 lists.</div>
-                            <progress max="100" value="70"></progress>
-                            <button>Go to project</button>
-                        </div>
-                    </div>`;
-    }
-    static #renderMainButtons() {
-        //DOMSTUFF
-        const mainButtons = document.createElement("div");
-        mainButtons.id = "mainButtons";
-        this.body.appendChild(mainButtons);
-
-        //BUTTONS
-        const btnNewProject = document.createElement("button");
-        btnNewProject.innerText = "New Project";
-        mainButtons.appendChild(btnNewProject);
-        btnNewProject.addEventListener("click", (event) => {});
     }
 }
