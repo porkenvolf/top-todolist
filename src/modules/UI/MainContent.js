@@ -1,4 +1,4 @@
-import UI_List from "../UI_List";
+import UI_List from "./UI_List";
 import Storage from "../Storage";
 
 export default class MainContent {
@@ -12,7 +12,7 @@ export default class MainContent {
         const mainContent = document.createElement("div");
         mainContent.id = "mainContent";
 
-        const lists = Storage.listsStorage;
+        const lists = Storage.lists;
 
         for (const key in lists) {
             mainContent.appendChild(new UI_List(lists[key]));

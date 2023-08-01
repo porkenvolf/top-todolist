@@ -16,13 +16,13 @@ export default class Footer {
         }
         const divFooter = document.createElement("footer");
         divFooter.innerHTML = `
-    <small>
-        &copy; Copyright ${footerString}
-        <a href="https://github.com/porkenvolf" target="”_blank”">
-            Porkenvölf
-        </a>
-    </small>
-    `;
+            <small>
+                &copy; Copyright ${footerString}
+                <a href="https://github.com/porkenvolf" target="”_blank”">
+                    Porkenvölf
+                </a>
+            </small>
+            `;
         divFooter.style.display = "flex";
         divFooter.style.justifyContent = "center";
         divFooter.style.alignItems = "center";

@@ -1,10 +1,9 @@
-import "./css/style.css";
-import { renderFooter } from "./footer";
+import "../../css/style.css";
 
-import NavBar from "./modules/NavBar";
-import MenuBar from "./modules/MenuBar";
-import MainContent from "./modules/MainContent";
-import Footer from "./modules/Footer";
+import NavBar from "./NavBar";
+import MenuBar from "./MenuBar";
+import MainContent from "./MainContent";
+import Footer from "./Footer";
 
 export default class UI {
     static loadPage() {

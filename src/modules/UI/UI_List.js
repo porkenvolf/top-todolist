@@ -1,6 +1,9 @@
-import Pubsub from "./Pubsub";
-import imgClose from "./img/close.svg";
-import imgPlus from "./img/plus.svg";
+import Pubsub from "../Pubsub";
+import imgClose from "../../img/close.svg";
+import imgPlus from "../../img/plus.svg";
+import imgClock from "../../img/clock-plus-outline.svg";
+import formatDistance from "date-fns/formatDistance";
+import compareAsc from "date-fns/compareAsc";
 
 class inputTitle {
     #list;
@@ -173,6 +176,76 @@ class taskList {
         return this.#output;
     }
 }
+class dueDate {
+    #list;
+    #output;
+    constructor(list) {
+        this.#list = list;
+        this.#output = this.#render();
+        this.#bindEvents();
+    }
+    #render() {
+        const dueDate = document.createElement("div");
+        dueDate.style.display = "flex";
+        dueDate.style.alignItems = "center";
+        dueDate.style.gap = "10px";
+
+        const item = document.createElement("div");
+        item.classList.add("item");
+        dueDate.appendChild(item);
+
+        const img = document.createElement("img");
+        img.src = imgClock;
+        item.appendChild(img);
+
+        const input = document.createElement("input");
+        input.type = "date";
+        item.appendChild(input);
+
+        const verbose = document.createElement("div");
+
+        dueDate.appendChild(verbose);
+        if (this.#list.dueDate) {
+            item.classList.add("expanded");
+            input.value = this.#list.dueDate;
+
+            const now = new Date();
+            const dueDate = new Date(this.#list.dueDate);
+            const verb = compareAsc(dueDate, now) > 0 ? "expires" : "expired";
+
+            verbose.innerText = `This list ${verb} ${formatDistance(
+                dueDate,
+                now,
+                {
+                    addSuffix: true,
+                }
+            )}`;
+        }
+
+        return dueDate;
+    }
+    #bindEvents() {
+        this.#output.addEventListener("click", (event) => {
+            const targetContainer = event.target.closest(".item");
+            targetContainer.classList.toggle("expanded");
+        });
+        this.#output
+            .querySelector("input")
+            .addEventListener("click", (event) => {
+                event.stopPropagation();
+            });
+        this.#output
+            .querySelector("input")
+            .addEventListener("change", (event) => {
+                const id = this.#list.id;
+                const newDueDate = event.target.value;
+                Pubsub.emit("updateListDueDate", { id, newDueDate });
+            });
+    }
+    get output() {
+        return this.#output;
+    }
+}
 
 export default class UI_List {
     #divCard;
@@ -197,24 +270,27 @@ export default class UI_List {
 
         divCard.innerHTML = `
             <div id='title'></div>
+            <div id='body'></div>
+            <div id='footer'></div>
         `;
         //TITLE
         divCard
             .querySelector("#title")
             .appendChild(new inputTitle(this.#list).output);
 
-        //REMOVE LIST
         divCard
             .querySelector("#title")
             .appendChild(new btnRemoveList(this.#list).output);
 
-        //TASKS
-        divCard.appendChild(new taskList(this.#list).output);
+        //BODY
+        divCard
+            .querySelector("#body")
+            .appendChild(new taskList(this.#list).output);
 
-        /* //DUE DATE
-        const dueDate = document.createElement("div");
-        dueDate.innerText = "Due Date";
-        divCard.appendChild(dueDate); */
+        //FOOTER
+        divCard
+            .querySelector("#footer")
+            .appendChild(new dueDate(this.#list).output);
 
         //ADD TO OBJECT
         this.#divCard = divCard;

@@ -1,6 +1,6 @@
 import Pubsub from "./Pubsub";
 import Storage from "./Storage";
-import UI from "./UI";
+import UI from "./UI/UI";
 import Task from "./Task";
 import List from "./List";
 
@@ -24,19 +24,26 @@ export default class EventsInterface {
         Pubsub.on("newList", () => {
             const newID = Math.random().toFixed(5);
             const newList = new List(newID, "New List", {});
-            Storage.listsStorage[newID] = newList;
+            Storage.lists[newID] = newList;
 
             Pubsub.emit("reloadPage");
         });
         Pubsub.on("removeList", (data) => {
-            delete Storage.listsStorage[data.id];
+            delete Storage.lists[data.id];
 
             Pubsub.emit("reloadPage");
         });
         Pubsub.on("updateListName", (data) => {
             const id = data.id;
             const newName = data.newName;
-            Storage.listsStorage[id].name = newName;
+            Storage.lists[id].name = newName;
+            Pubsub.emit("reloadPage");
+        });
+        Pubsub.on("updateListDueDate", (data) => {
+            const id = data.id;
+            const newDueDate = data.newDueDate;
+            Storage.lists[id].dueDate = newDueDate;
+            Pubsub.emit("reloadPage");
         });
 
         //TASKS
@@ -47,13 +54,13 @@ export default class EventsInterface {
 
             const newID = Math.random();
             const newTask = new Task(name, isDone);
-            Storage.listsStorage[listID].tasks[newID] = newTask;
+            Storage.lists[listID].tasks[newID] = newTask;
         });
         Pubsub.on("updateIsDone", (data) => {
             const listID = data.listID;
             const taskID = data.taskID;
             const newIsDone = data.newIsDone;
-            Storage.listsStorage[listID].tasks[taskID].isDone = newIsDone;
+            Storage.lists[listID].tasks[taskID].isDone = newIsDone;
         });
     }
 }

@@ -83,6 +83,45 @@ li {
     border-radius: 50px;
     margin-left: 10px;
 }
+#mainContent .card #body {
+    flex: 1;
+    padding: 5px;
+}
+#mainContent .card #footer {
+    padding: 5px;
+    display: flex;
+}
+#mainContent .card #footer img {
+    width: 2.5rem;
+    padding: 5px;
+    border-radius: 50px;
+    filter: opacity(1) invert(1) brightness(80%);
+    transition: 200ms;
+}
+#mainContent .card .item {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 50px;
+    width: 2.5rem;
+    transition: 200ms;
+    overflow: hidden;
+}
+#mainContent .card .item input {
+    width: auto;
+    text-align: center;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    height: 2rem;
+}
+#mainContent .card .item.expanded {
+    width: 200px;
+    background: rgb(82, 108, 130);
+}
+#mainContent .card #footer .item:hover {
+    background: rgb(82, 108, 130);
+}
 #mainContent .card:hover .parentHoverRemoveList {
     filter: opacity(1) invert(1) brightness(80%) !important;
 }

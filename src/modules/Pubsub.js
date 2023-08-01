@@ -1,6 +1,3 @@
-/* 
-█▀▄ █ █ ██▄ ▄▀▀ █ █ ██▄ 
-█▀  ▀▄█ █▄█ ▄█▀ ▀▄█ █▄█  */
 /* https://gist.github.com/learncodeacademy/777349747d8382bfb722 */
 var Pubsub = {
     Pubsub: {},

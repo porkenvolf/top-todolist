@@ -5,10 +5,11 @@ export default class List {
     #id;
     #name;
     #tasks = {};
-    #tags = [];
-    constructor(_id, _name, _objTasks) {
+    #dueDate;
+    constructor(_id, _name, _objTasks, _dueDate) {
         this.#id = _id;
         this.#name = _name;
+        this.#dueDate = _dueDate;
         if (_objTasks) {
             for (const key in _objTasks) {
                 this.#tasks[key] = new Task(
@@ -32,11 +33,22 @@ export default class List {
     get id() {
         return this.#id;
     }
+    get dueDate() {
+        return this.#dueDate;
+    }
+    set dueDate(date) {
+        this.#dueDate = date;
+    }
     get parse() {
         let outputTasks = {};
         for (const key in this.#tasks) {
             outputTasks[key] = this.#tasks[key].parse;
         }
-        return { id: this.#id, name: this.#name, tasks: outputTasks };
+        return {
+            id: this.#id,
+            name: this.#name,
+            tasks: outputTasks,
+            dueDate: this.#dueDate,
+        };
     }
 }
